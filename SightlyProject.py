@@ -70,13 +70,8 @@ def getfilename():
 
 
 downloadedFile = xlrd.open_workbook(getfilename())
-'''Changing the Current Working Directory to where the python script is located'''
-os.chdir(os.path.dirname(os.path.realpath(__file__)))
-my_file = Path.cwd() / "Data/Data.xlsx"
-hardcodedFile = xlrd.open_workbook(my_file)
-
 downloadedSheet = downloadedFile.sheet_by_index(0)
-hardcodedSheet = hardcodedFile.sheet_by_index(0)
+
 
 '''Read Excel and print to output'''
 for row in range(downloadedSheet.nrows):  # loop every row
@@ -90,18 +85,42 @@ for row in range(downloadedSheet.nrows):  # loop every row
             print(downloadedSheet.cell_value(row, col), end='')
         print('\t', end='')
     print()
-print( )
-'''Validate data downloaded to the hardcoded data'''
-for rownum in range(2, max(downloadedSheet.nrows, hardcodedSheet.nrows)):
-    if rownum < downloadedSheet.nrows:
-        row_downloadedSheet = downloadedSheet.row_values(rownum)
-        row_hardcodedSheet = hardcodedSheet.row_values(rownum)
+print('  ')
 
-        for colnum, (c1, c2) in enumerate(zip_longest(row_downloadedSheet, row_hardcodedSheet)):
-            if c1 != c2:
-                print("Row {} Col {} - {} != {}".format(rownum + 1, colnum + 1, c1, c2))
+'''Validate data downloaded to the hardcoded data'''
+def ValidateData(file):
+    result = True
+    hardcodedFile = xlrd.open_workbook(file)
+    hardcodedSheet = hardcodedFile.sheet_by_index(0)
+    for rownum in range(2, max(downloadedSheet.nrows, hardcodedSheet.nrows)):
+        if rownum < downloadedSheet.nrows:
+            row_downloadedSheet = downloadedSheet.row_values(rownum)
+            row_hardcodedSheet = hardcodedSheet.row_values(rownum)
+
+            for colnum, (c1, c2) in enumerate(zip_longest(row_downloadedSheet, row_hardcodedSheet)):
+                if c1 != c2:
+                    print("Row {} Col {} - {} != {}".format(rownum + 1, colnum + 1, c1, c2))
+                    result = False
+        else:
+            print("Row {} missing".format(rownum + 1))
+    if result == True:
+        print("Data in both sheets match")
     else:
-        print("Row {} missing".format(rownum + 1))
+        print("Data in both sheets does not match")
+    
+
+'''Changing the Current Working Directory to where the python script is located'''
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+valid_file = Path.cwd() / "Data/correctData.xlsx"
+
+'''file to check for invalid data'''
+invalid_file = Path.cwd() / "Data/IncorrectData.xlsx"
+
+print("Valid data")
+ValidateData(valid_file)
+print('**************************************** ')
+print("invalid data")
+ValidateData(invalid_file)
 
 driver.find_element_by_xpath("//div[@id='modal-container']/div[1]/div[3]").click()
 driver.implicitly_wait(3)
