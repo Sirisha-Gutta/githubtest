@@ -38,6 +38,7 @@ Screen "Scaling & Layout" should be set to 100%
 
 ## Scenario that is being tested ##
 
+1. Testing was done using Chrome Browser
 1. Logs into the application
 1. Selects the second row to create a report as retrieving data for the first row is timing out
 1. Generates report with set conditions
