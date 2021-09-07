@@ -90,7 +90,7 @@ for row in range(downloadedSheet.nrows):  # loop every row
             print(downloadedSheet.cell_value(row, col), end='')
         print('\t', end='')
     print()
-
+print( )
 '''Validate data downloaded to the hardcoded data'''
 for rownum in range(2, max(downloadedSheet.nrows, hardcodedSheet.nrows)):
     if rownum < downloadedSheet.nrows:
@@ -102,7 +102,6 @@ for rownum in range(2, max(downloadedSheet.nrows, hardcodedSheet.nrows)):
                 print("Row {} Col {} - {} != {}".format(rownum + 1, colnum + 1, c1, c2))
     else:
         print("Row {} missing".format(rownum + 1))
-
 
 driver.find_element_by_xpath("//div[@id='modal-container']/div[1]/div[3]").click()
 driver.implicitly_wait(3)

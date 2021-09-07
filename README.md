@@ -26,6 +26,9 @@ python -m pip install xlrd==1.2.0
 
 <pre><code>
 
-Clone from Git repository from here
+Clone from Git repository from [Here](https://github.com/Sirisha-Gutta/githubtest)
 
-Can run from command prompt
+Can run from command prompt using ![Alt text](/python_fromcmd.PNG?raw=true "Optional Title")
+or use IDE Pycharm
+
+Screen "Scaling & Layout" has to be set to 100%
